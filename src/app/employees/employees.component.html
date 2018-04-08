@@ -1,0 +1,45 @@
+<div class="container mat-elevation-z8">
+
+  <div class="header">
+    <div class="mat-typography mat-headline">Employee manager  <span class="ec ec-heart-eyes"></span><span class="ec ec-tada"></span></div>
+  </div>
+
+  <div class="filter">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Filter by office">
+        <mat-option (click)="applyOfficeFilter('')" value="All offices">All offices</mat-option>
+        <mat-option *ngFor="let office of offices" (click)="applyOfficeFilter(office)" value="office">{{office}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><span class="ec ec-raising-hand-woman"></span>&nbsp;Name</mat-header-cell>
+      <mat-cell *matCellDef="let employee" >{{employee.firstName + ' ' + employee.lastName}}</mat-cell>
+    </ng-container>
+      <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><span class="ec ec-briefcase"></span>&nbsp;Title</mat-header-cell>
+      <mat-cell *matCellDef="let employee"> {{employee.title}} </mat-cell>
+    </ng-container>
+      <ng-container matColumnDef="office">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><span class="ec ec-office"></span>&nbsp;Office</mat-header-cell>
+      <mat-cell *matCellDef="let employee"> {{employee.office}} </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header><span class="ec ec-love-letter"></span>&nbsp;Email</mat-header-cell>
+      <mat-cell *matCellDef="let employee"> {{employee.email}} </mat-cell>
+    </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator #paginator
+           [pageSize]="4"
+           [pageSizeOptions]="[4, 25, 100]"
+           [showFirstLastButtons]="true">
+  </mat-paginator>
+</div>
